@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from sanic import Blueprint, response
-from sanic_jwt import exceptions, protected
+from sanic_jwt import protected
 from sanic.exceptions import ServerError
 from time import time
 from uuid import uuid4
@@ -11,7 +11,7 @@ from config import Config
 #инициализация блюпринт в приложении
 bp_offer = Blueprint('offers', url_prefix='/offer')
 
-#при старте сервера создаём монгу
+#при старте сервера создаём подключение к экземпляру монги, расположенному на хосте Config.MONGO_URL
 @bp_offer.listener('before_server_start')
 async def setup_connection(app, loop):
     global db
@@ -84,15 +84,6 @@ async def get_offers(request):
             offer_dict = {'offer_id': offer.get('offer_id'),
                           'title': offer.get('title'),
                           'text': offer.get('text'),
-                          'create_at': offer.get('create_at')}
+                          'created_at': offer.get('created_at')}
             offers_list.append(offer_dict)
         return response.json({'offers_list': offers_list})
-
-
-
-
-
-
-
-
-
