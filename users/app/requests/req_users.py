@@ -11,7 +11,7 @@ from config import Config
 #инициализация блюпринт в приложении
 bp_user = Blueprint('users', url_prefix='/user')
 
-#при старте сервера создаём монгу
+#при старте сервера создаём подключение к экземпляру монги, расположенному на хосте Config.MONGO_URL
 @bp_user.listener('before_server_start')
 async def setup_connection(app, loop):
     global db
@@ -75,4 +75,4 @@ async def get_user(request, user_id):
 
     return response.json({"username": user.get("username"),
                           "created_at": user.get("created_at"),
-                          "offers_ids": user.get("offers_ids", [])}, status=200)
+                          "offers_ids": user.get("offers_ids")}, status=200)
