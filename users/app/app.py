@@ -6,7 +6,7 @@ from app.requests import bp_user, authenticate
 def getapp():
     app = Sanic(__name__)
 
-    # инициализируем экземпляр саник
+    # инициализируем sanic-jwt
     Initialize(app,
                authenticate=authenticate,
                url_prefix='/user/auth',
